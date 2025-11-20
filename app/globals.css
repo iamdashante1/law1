@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --radius: 14px;
+}
+
+html, body { scroll-behavior: smooth; }
+
+body {
+  background-color: #0b2144;
+}
+
+/* Typography tweaks */
+@layer base {
+  h1, h2, h3, h4 { @apply tracking-tight; }
+}
+
