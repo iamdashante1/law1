@@ -3,6 +3,8 @@ import { motion } from 'framer-motion'
 import clsx from 'clsx'
 import React from 'react'
 
+const MotionLink = motion('a')
+
 type Props = {
   href?: string
   children: React.ReactNode
@@ -26,7 +28,7 @@ export default function AnimatedButton({ href, children, className, variant = 'p
 
   if (href) {
     return (
-      <motion.a
+      <MotionLink
         href={href}
         whileHover={{ y: -1, scale: 1.02 }}
         whileTap={{ scale: 0.98, y: 0 }}
@@ -35,7 +37,7 @@ export default function AnimatedButton({ href, children, className, variant = 'p
         onClick={onClick as any}
       >
         {children}
-      </motion.a>
+      </MotionLink>
     )
   }
 
