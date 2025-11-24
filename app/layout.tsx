@@ -34,9 +34,9 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${inter.variable} ${playfair.variable}`}>
-      <body className="min-h-screen bg-gradient-to-b from-brand-900 via-brand-950 to-black text-white antialiased">
+      <body className="min-h-screen bg-slate-50 text-slate-900 antialiased">
         <Navbar />
-        <main className="pt-20">{children}</main>
+        <main className="pt-0">{children}</main>
         <Footer />
       </body>
     </html>

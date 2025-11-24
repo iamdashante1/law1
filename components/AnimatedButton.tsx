@@ -7,7 +7,7 @@ type Props = {
   href?: string
   children: React.ReactNode
   className?: string
-  variant?: 'primary' | 'outline' | 'ghost'
+  variant?: 'primary' | 'outline' | 'ghost' | 'inverted'
   disabled?: boolean
   onClick?: React.MouseEventHandler<HTMLElement>
   type?: 'button' | 'submit' | 'reset'
@@ -15,11 +15,12 @@ type Props = {
 
 export default function AnimatedButton({ href, children, className, variant = 'primary', disabled, onClick, type = 'button' }: Props) {
   const base = clsx(
-    'inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 font-medium transition-colors',
+    'inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold transition-colors',
     disabled && 'opacity-70 cursor-not-allowed',
-    variant === 'primary' && 'bg-accent text-black',
-    variant === 'outline' && 'border border-white/20 text-white/90 hover:bg-white/5',
-    variant === 'ghost' && 'text-white/80 hover:text-white',
+    variant === 'primary' && 'bg-slate-900 text-white hover:bg-black',
+    variant === 'outline' && 'border border-slate-300 text-slate-900 hover:bg-slate-100',
+    variant === 'ghost' && 'text-slate-700 hover:text-slate-900',
+    variant === 'inverted' && 'border border-white/40 text-white hover:bg-white/10',
     className,
   )
 

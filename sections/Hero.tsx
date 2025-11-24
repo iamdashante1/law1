@@ -1,101 +1,65 @@
-'use client'
-import { motion } from 'framer-motion'
-import { ShieldCheck, Scale, Phone, Clock, BadgeCheck, ChevronDown } from 'lucide-react'
 import AnimatedButton from '@/components/AnimatedButton'
-import BackgroundOrbs from '@/components/BackgroundOrbs'
+import Image from 'next/image'
+
+const signals = [
+  { title: 'Series C operator', summary: 'Commercial strategy + rapid dispute intake' },
+  { title: 'Creative studio', summary: 'Global IP and partnership framework' },
+  { title: 'Family office', summary: 'Multi-asset governance refresh' },
+]
 
 export default function Hero() {
   return (
-    <div className="relative overflow-hidden">
-      {/* Background image + animated orbs */}
-      <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1589829545856-d10d557cf95f?q=80&w=1964&auto=format&fit=crop')] bg-cover bg-center opacity-15"></div>
-      <BackgroundOrbs />
-      <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-brand-950/40 to-brand-950/70" />
+    <section className="bg-white pt-24 pb-16 md:pt-28" id="model">
+      <div className="container grid items-start gap-14 lg:grid-cols-[1.1fr,0.9fr]">
+        <div>
+          <p className="text-sm font-semibold text-slate-500 capitalize">Law Studio</p>
+          <h1 className="mt-4 font-display text-4xl leading-tight text-slate-900 sm:text-5xl lg:text-6xl">
+            Precision counsel for decisive teams.
+          </h1>
+          <p className="mt-6 max-w-2xl text-lg text-slate-600">
+            We embed with founders, investors, and operators to translate legal risk into practical direction—covering
+            governance, commercial negotiations, and complex disputes in equal measure.
+          </p>
 
-      <div className="container relative min-h-[80vh] md:min-h-[90vh] py-24 md:py-32 flex flex-col justify-center">
-        {/* Badge */}
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="inline-flex w-fit items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs text-white/80"
-        >
-          <BadgeCheck className="h-4 w-4 text-accent" /> 10+ years of trusted counsel
-        </motion.div>
+          <div className="mt-8 flex flex-wrap gap-3">
+            <AnimatedButton href="#engage">Discuss a matter</AnimatedButton>
+            <AnimatedButton href="mailto:hello@lawstudio.com" variant="outline">
+              Email hello@lawstudio.com
+            </AnimatedButton>
+          </div>
+        </div>
 
-        {/* Headline */}
-        <motion.h1
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="mt-4 font-display text-3xl sm:text-5xl md:text-6xl tracking-tight max-w-3xl"
-        >
-          Practical Counsel. Proven Results.
-        </motion.h1>
+        <div className="rounded-3xl border border-slate-200 bg-slate-50 p-6">
+          <div className="flex items-center gap-4">
+            <div className="relative h-16 w-16 overflow-hidden rounded-2xl">
+              <Image
+                src="https://images.unsplash.com/photo-1528892952291-009c663ce843?q=80&w=800&auto=format&fit=crop"
+                alt="Attorney portrait"
+                fill
+                sizes="64px"
+                className="object-cover"
+              />
+            </div>
+            <div>
+              <p className="text-sm text-slate-500 capitalize">Lead counsel</p>
+              <p className="text-lg font-semibold text-slate-900">Dashante Hart</p>
+              <p className="text-sm text-slate-600">Outside GC · Arbitrator · Strategist</p>
+            </div>
+          </div>
 
-        {/* Subhead */}
-        <motion.p
-          initial={{ opacity: 0, y: 20, }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1, duration: 0.6 }}
-          className="mt-4 max-w-xl sm:max-w-2xl text-white/80"
-        >
-          Strategic guidance across disputes, contracts, and risk—so you can move forward with clarity and confidence.
-        </motion.p>
-
-        {/* CTAs */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2, duration: 0.6 }}
-          className="mt-8 flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:gap-4"
-        >
-          <AnimatedButton href="#contact" className="w-full sm:w-auto" variant="primary">
-            <ShieldCheck className="h-5 w-5" /> Book a Consultation
-          </AnimatedButton>
-          <AnimatedButton href="tel:(555)123-4567" className="w-full sm:w-auto" variant="outline">
-            <Phone className="h-5 w-5" /> (555) 123‑4567
-          </AnimatedButton>
-        </motion.div>
-
-        {/* Highlights */}
-        <motion.ul
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3, duration: 0.5 }}
-          className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-6 max-w-3xl"
-        >
-          <li className="flex items-center gap-2 text-white/80 text-sm">
-            <Clock className="h-4 w-4 text-accent" /> Fast response and clear next steps
-          </li>
-          <li className="flex items-center gap-2 text-white/80 text-sm">
-            <Scale className="h-4 w-4 text-accent" /> Business‑minded strategy
-          </li>
-          <li className="flex items-center gap-2 text-white/80 text-sm">
-            <ShieldCheck className="h-4 w-4 text-accent" /> Transparent, upfront fees
-          </li>
-        </motion.ul>
-
-        {/* Trust bar */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.4, duration: 0.6 }}
-          className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-3 text-white/40 text-xs"
-        >
-          <span>As featured in</span>
-          <span className="tracking-wider">Chambers</span>
-          <span className="tracking-wider">SuperLawyers</span>
-          <span className="tracking-wider">Law360</span>
-          <span className="tracking-wider">ABA Journal</span>
-        </motion.div>
-
-        {/* Scroll cue */}
-        <a href="#services" className="group mt-12 inline-flex items-center gap-2 text-white/60 hover:text-white">
-          <ChevronDown className="h-5 w-5 transition-transform group-hover:translate-y-0.5" />
-          <span className="text-sm">Scroll to explore</span>
-        </a>
+          <div className="mt-6 rounded-2xl bg-white p-5 shadow-sm shadow-slate-200">
+            <p className="text-sm font-semibold text-slate-900">Matters in flight</p>
+            <ul className="mt-4 space-y-4">
+              {signals.map((signal) => (
+                <li key={signal.title} className="rounded-xl border border-slate-200 px-3 py-3">
+                  <p className="text-sm font-medium text-slate-900">{signal.title}</p>
+                  <p className="text-sm text-slate-600">{signal.summary}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
       </div>
-    </div>
+    </section>
   )
 }

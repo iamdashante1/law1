@@ -1,5 +1,4 @@
 import { notFound } from 'next/navigation'
-import Section from '@/components/Section'
 import { getPostBySlug, posts } from '@/content/posts'
 
 type Params = { params: { slug: string } }
@@ -21,15 +20,17 @@ export default function BlogPost({ params }: Params) {
   const post = getPostBySlug(params.slug)
   if (!post) return notFound()
   return (
-    <Section className="container py-20">
-      <div className="text-xs text-white/50">{formatDate(post.date)}</div>
-      <h1 className="mt-2 font-display text-3xl md:text-4xl">{post.title}</h1>
-      <article className="mt-6 space-y-5">
-        {post.content.map((para, i) => (
-          <p key={i} className="text-white/80 leading-7">{para}</p>
-        ))}
-      </article>
-    </Section>
+    <section className="bg-white py-20">
+      <div className="container">
+        <div className="text-xs capitalize text-slate-500">{formatDate(post.date)}</div>
+        <h1 className="mt-2 font-display text-3xl text-slate-900 md:text-4xl">{post.title}</h1>
+        <article className="mt-6 space-y-5 text-slate-700">
+          {post.content.map((para, i) => (
+            <p key={i} className="leading-7">{para}</p>
+          ))}
+        </article>
+      </div>
+    </section>
   )
 }
 

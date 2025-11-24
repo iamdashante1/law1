@@ -1,19 +1,19 @@
 import Hero from '@/sections/Hero'
-import Services from '@/sections/Services'
-import PracticeAreas from '@/sections/PracticeAreas'
-import Attorney from '@/sections/Attorney'
-import Testimonials from '@/sections/Testimonials'
-import Contact from '@/sections/Contact'
+import Highlights from '@/sections/Highlights'
+import Capabilities from '@/sections/Capabilities'
+import Approach from '@/sections/Approach'
+import Experience from '@/sections/Experience'
+import Engagement from '@/sections/Engagement'
 
 export default function Home() {
   return (
     <>
       <Hero />
-      <Services />
-      <PracticeAreas />
-      <Attorney />
-      <Testimonials />
-      <Contact />
+      <Highlights />
+      <Capabilities />
+      <Approach />
+      <Experience />
+      <Engagement />
     </>
   )
 }
