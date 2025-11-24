@@ -1,40 +1,64 @@
 'use client'
-import { motion } from 'framer-motion'
-import clsx from 'clsx'
 import React from 'react'
+import clsx from 'clsx'
+import { motion, MotionProps } from 'framer-motion'
 
-const MotionAnchor = motion('a')
-const MotionButton = motion.button
+const AnchorElement = React.forwardRef<HTMLAnchorElement, React.AnchorHTMLAttributes<HTMLAnchorElement>>(function AnchorElement(
+  props,
+  ref,
+) {
+  return <a ref={ref} {...props} />
+})
 
-type BaseProps = {
+const ButtonElement = React.forwardRef<HTMLButtonElement, React.ButtonHTMLAttributes<HTMLButtonElement>>(function ButtonElement(
+  props,
+  ref,
+) {
+  return <button ref={ref} {...props} />
+})
+
+const MotionAnchor = motion(AnchorElement)
+const MotionButton = motion(ButtonElement)
+
+type MotionAnchorProps = React.ComponentProps<typeof MotionAnchor>
+type MotionButtonProps = React.ComponentProps<typeof MotionButton>
+
+type Variant = 'primary' | 'outline' | 'ghost' | 'inverted'
+
+type CommonProps = {
   children: React.ReactNode
   className?: string
-  variant?: 'primary' | 'outline' | 'ghost' | 'inverted'
+  variant?: Variant
 }
 
-type AnchorProps = BaseProps & {
+type AnchorOnlyProps = Omit<MotionAnchorProps, 'className' | 'children' | 'href'> & {
   href: string
-  target?: React.HTMLAttributeAnchorTarget
-  rel?: string
-  onClick?: React.MouseEventHandler<HTMLAnchorElement>
 }
 
-type ButtonProps = BaseProps & {
+type ButtonOnlyProps = Omit<MotionButtonProps, 'className' | 'children'> & {
   href?: never
-  disabled?: boolean
-  type?: 'button' | 'submit' | 'reset'
-  onClick?: React.MouseEventHandler<HTMLButtonElement>
 }
 
-type AnimatedButtonProps = AnchorProps | ButtonProps
+type AnimatedButtonProps = CommonProps & (AnchorOnlyProps | ButtonOnlyProps)
 
-export default function AnimatedButton(props: AnimatedButtonProps) {
-  const { children, className, variant = 'primary' } = props
-  const base = clsx(
+const motionBehavior = {
+  whileHover: { y: -1, scale: 1.02 },
+  whileTap: { scale: 0.98, y: 0 },
+  transition: { type: 'spring', stiffness: 400, damping: 20 },
+} satisfies Pick<MotionProps, 'whileHover' | 'whileTap' | 'transition'>
+
+const AnimatedButton = React.forwardRef<HTMLAnchorElement | HTMLButtonElement, AnimatedButtonProps>(function AnimatedButton(
+  props,
+  forwardedRef,
+) {
+  const { children, className, variant = 'primary', ...rest } = props
+  const isAnchor = 'href' in props
+
+  const baseClass = clsx(
     'inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold transition-colors',
     'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-500/50 focus-visible:ring-offset-2',
     'transition-transform',
-    'href' in props ? undefined : props.disabled && 'opacity-70 cursor-not-allowed',
+    !isAnchor && (rest as ButtonOnlyProps).disabled && 'opacity-70 cursor-not-allowed',
     variant === 'primary' && 'bg-slate-900 text-white hover:bg-black',
     variant === 'outline' && 'border border-slate-300 text-slate-900 hover:bg-slate-100',
     variant === 'ghost' && 'text-slate-700 hover:text-slate-900',
@@ -42,26 +66,39 @@ export default function AnimatedButton(props: AnimatedButtonProps) {
     className,
   )
 
-  const motionProps = {
-    whileHover: { y: -1, scale: 1.02 },
-    whileTap: { scale: 0.98, y: 0 },
-    transition: { type: 'spring' as const, stiffness: 400, damping: 20 },
-  }
-
-  if ('href' in props) {
-    const { href, target, rel, onClick } = props
+  if (isAnchor) {
+    const { href, target, rel, ...anchorRest } = rest as AnchorOnlyProps
     const computedRel = rel ?? (target === '_blank' ? 'noopener noreferrer' : undefined)
+
     return (
-      <MotionAnchor href={href} target={target} rel={computedRel} className={base} onClick={onClick} {...motionProps}>
+      <MotionAnchor
+        {...anchorRest}
+        {...motionBehavior}
+        href={href}
+        target={target}
+        rel={computedRel}
+        className={baseClass}
+        ref={forwardedRef as React.Ref<HTMLAnchorElement>}
+      >
         {children}
       </MotionAnchor>
     )
   }
 
-  const { disabled, type = 'button', onClick } = props
+  const { type = 'button', disabled, ...buttonRest } = rest as ButtonOnlyProps
+
   return (
-    <MotionButton type={type} disabled={disabled} className={base} onClick={onClick} {...motionProps}>
+    <MotionButton
+      {...buttonRest}
+      {...motionBehavior}
+      type={type}
+      disabled={disabled}
+      className={baseClass}
+      ref={forwardedRef as React.Ref<HTMLButtonElement>}
+    >
       {children}
     </MotionButton>
   )
-}
+})
+
+export default AnimatedButton
